@@ -18,4 +18,8 @@ struct CatImage: Codable {
 struct Breed: Codable {
     let name: String
     let origin: String
+    let description: String
+    let temperament: String
+    let life_span: String
+    let dog_friendly: Int
 }

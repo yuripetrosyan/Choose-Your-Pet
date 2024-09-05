@@ -7,64 +7,93 @@
 
 import SwiftUI
 
-struct CatView: CatView {
+struct CatView: View {
     @ObservedObject var viewModel = CatImagesViewModel()
+    @State private var detailedON: Bool = false
+    @State private var dragOffset: CGFloat = 0.0 // Used to track the swipe gesture
+
     
-    var body: some CatView {
+    var body: some View {
         
             VStack{
-                ZStack{
-                    RoundedRectangle(cornerRadius: 20)
-                        .frame(width: 330, height: 400)
-                        .foregroundStyle(.ultraThinMaterial)
-                    VStack{
+                ZStack(alignment: .bottom){
                         if viewModel.isLoading {
-                            ProgressView("Loading your cat image")
+                            ProgressView("Loading your next cat image")
                         } else if let imageURL = viewModel.catImageUrl {
-                            
+                          
                             AsyncImage(url: URL(string: imageURL)) { image in
+                                ZStack{
                                 image
                                     .resizable()
-                                    .clipShape(RoundedRectangle(cornerRadius: 30))
-                                    .scaledToFit()
-                                    .frame(width: 300, height: 300)
+                                    .clipShape(RoundedRectangle(cornerRadius: 40))
+                                    .frame(width: 330, height: 430)
+                                    .scaledToFill()
                                 
                                 
-                                if let breedName = viewModel.breedName {
-                                    Text("Name: \(breedName)")
+                                // MARK: Info Capsule
+                                
+                                ZStack{
+                                    RoundedRectangle(cornerRadius: 30)
+                                    
+                                        .foregroundStyle(.ultraThinMaterial)
+                                    
+                                    infoView
+                                 
                                 }
-                                if let breedOrigin = viewModel.breedOrigin {
-                                    Text("Origin: \(breedOrigin)")
+                                .frame(width: detailedON ? 330 : 310, height: detailedON ? 430 : 80)
+                                .offset(y: detailedON ? 0 : 165)
+                                .onTapGesture {
+                                    withAnimation(.easeInOut(duration: 0.3)){
+                                        detailedON.toggle()
+                                    }
                                 }
                                 
-                            } placeholder: {
-                                ProgressView() // Show loading while the image downloads
+                                
                             }
-                        } else {
-                            Text("No cat image")
-                        }
-                      
-                    }
+                            }
+                                
+                                placeholder: {
+                                    ProgressView() // Show loading while the image downloads
+                                }
+                            } else {
+                                Text("No cat image")
+                            }
+                        
                 }
+                .offset(x: dragOffset)
+                .gesture(
+                     DragGesture()
+                        .onChanged { value in
+                            dragOffset = value.translation.width // Track the swipe movement
+                                    }
+                                    .onEnded { value in
+                                        if value.translation.width < -80 { // Swipe left to load next image
+                                            viewModel.fetchCatImage()
+                                        }
+                                        withAnimation(.spring()) {
+                                            dragOffset = 0 // Reset offset after swipe
+                                        }
+                                    }
+                            )
                 
                 
-            Button{
-                           viewModel.fetchCatImage()
-            }label: {
-                ZStack{
-                    Capsule(style: .continuous)
-                        .foregroundStyle(.blue)
-                        .frame(width: 120, height: 50)
-                    
-                    Text("Next")
-                        .foregroundStyle(.white)
-                       
-                    
-                }
+//            Button{
+//                           viewModel.fetchCatImage()
+//            }label: {
+//                ZStack{
+//                    Capsule(style: .continuous)
+//                        .foregroundStyle(.blue)
+//                        .frame(width: 120, height: 50)
+//                    
+//                    Text("Next")
+//                        .foregroundStyle(.white)
+//                       
+//                    
+//                }
                
-            }
-                       .buttonBorderShape(.capsule)
-                       .padding()
+//            }
+//                       .buttonBorderShape(.capsule)
+//                       .padding()
                 
                 
         }.onAppear {
@@ -75,6 +104,46 @@ struct CatView: CatView {
             
             
         }
+    
+    var infoView: some View {
+        VStack(alignment: .leading){
+            if let breedName = viewModel.breedName {
+                Text("**Name:**  \(breedName)")
+            }
+            if let breedOrigin = viewModel.breedOrigin {
+                Text("**Origin:**  \(breedOrigin)")
+            }
+            
+            if detailedON {
+//                if let breedDescription = viewModel.breedOrigin {
+//                    Text("**Description:**  \(breedDescription)")
+//                }
+                if let breedTemperament = viewModel.breedTemperament {
+                    VStack{
+                        Text("**Temperament:**  \(breedTemperament)")
+                    }
+                }
+                if let breedLifeSpan = viewModel.breedLifespan {
+                    VStack{
+                        Text("**Life Span:**  \(breedLifeSpan)")
+                    }
+                }
+                if let breedDescription = viewModel.breedDescription {
+                    HStack{
+                        Text("**Description:**  \(breedDescription)")
+                    }
+                }
+                if let dog_friendly = viewModel.dog_friendly {
+                    VStack{
+                        Text("**Dog Friendly:**  \(dog_friendly)")
+                    }
+                }
+            }
+            
+        }
+        .padding(.horizontal)
+        .frame( height: detailedON ? 420 : 30)
+    }
     }
 
 
