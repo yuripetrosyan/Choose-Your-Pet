@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Lottie
 
 struct CatView: View {
     @ObservedObject var viewModel = CatImagesViewModel()
@@ -16,18 +17,27 @@ struct CatView: View {
     var body: some View {
         
             VStack{
+                
+                
                 ZStack(alignment: .bottom){
                     if viewModel.isLoading {
-                        ProgressView("Loading your next cat image")
+                        LottieView(animation: .named("cat1.json"))
+                            .playing()
+                            .frame(width: 200, height: 200)
+                        
+                            
                     } else if let imageURL = viewModel.catImageUrl {
                         
                         AsyncImage(url: URL(string: imageURL)) { image in
                             
                             ZStack{
+                               
+                                
                                 image
                                     .resizable()
                                     .frame(width: 330, height: 430)
-                                    .scaledToFill()
+                                    .aspectRatio(contentMode: .fill)
+                                    //.scaledToFill()
                                     .clipShape(RoundedRectangle(cornerRadius: 40))
                                 
                                 
@@ -113,26 +123,7 @@ struct CatView: View {
                         }
                 )
                 
-                
-                //            Button{
-                //                           viewModel.fetchCatImage()
-                //            }label: {
-                //                ZStack{
-                //                    Capsule(style: .continuous)
-                //                        .foregroundStyle(.blue)
-                //                        .frame(width: 120, height: 50)
-                //
-                //                    Text("Next")
-                //                        .foregroundStyle(.white)
-                //
-                //
-                //                }
-                
-                //            }
-                //                       .buttonBorderShape(.capsule)
-                //                       .padding()
-                
-                
+            
                 if !viewModel.isLoading {
                     Label("Swipe up to see more details, or left to load next image", systemImage: "info.circle.fill")
                         
@@ -162,7 +153,7 @@ struct CatView: View {
             }else{
                 
                 Image(systemName: "minus")
-                Spacer()
+                    .padding(.bottom, 20)
             }
             
             
