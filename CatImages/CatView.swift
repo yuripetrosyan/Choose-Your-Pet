@@ -15,124 +15,138 @@ struct CatView: View {
     
     var body: some View {
         
-        VStack{
-            ZStack(alignment: .bottom){
-                if viewModel.isLoading {
-                    ProgressView("Loading your next cat image")
-                } else if let imageURL = viewModel.catImageUrl {
-                    
-                    AsyncImage(url: URL(string: imageURL)) { image in
-                        ZStack{
-                            image
-                                .resizable()
-                                .frame(width: 330, height: 430)
-                                .scaledToFill()
-                                .clipShape(RoundedRectangle(cornerRadius: 40))
-                            
-                            
-                            
-                            
-                            // MARK: Info Capsule
+            VStack{
+                ZStack(alignment: .bottom){
+                    if viewModel.isLoading {
+                        ProgressView("Loading your next cat image")
+                    } else if let imageURL = viewModel.catImageUrl {
+                        
+                        AsyncImage(url: URL(string: imageURL)) { image in
                             
                             ZStack{
-                                RoundedRectangle(cornerRadius: 30)
+                                image
+                                    .resizable()
+                                    .frame(width: 330, height: 430)
+                                    .scaledToFill()
+                                    .clipShape(RoundedRectangle(cornerRadius: 40))
                                 
-                                    .foregroundStyle(.ultraThinMaterial)
                                 
-                                infoView
                                 
-                            }
-                            .frame(width: detailedON ? 330 : 310, height: detailedON ? (430 - abs(verticalDragOffset)) : 80 - verticalDragOffset)
-                            .offset(y: detailedON ? 0 : 165 + verticalDragOffset)
-                            .onTapGesture {
-                                withAnimation(.easeInOut(duration: 0.3)){
-                                    detailedON.toggle()
+                                
+                                // MARK: Info Capsule
+                                ZStack{
+                                    RoundedRectangle(cornerRadius: 30)
+                                    
+                                        .foregroundStyle(.ultraThinMaterial)
+                                    
+                                    infoView
+                                    
                                 }
+                                .frame(width: detailedON ? 330 : 310, height: detailedON ? (430 - abs(verticalDragOffset)) : 80 - verticalDragOffset)
+                                .offset(y: detailedON ? 0 : 165 + verticalDragOffset)
+                                .onTapGesture {
+                                    withAnimation(.easeInOut(duration: 0.3)){
+                                        detailedON.toggle()
+                                    }
+                                }
+                                
+                                .gesture(
+                                    DragGesture()
+                                        .onChanged { value in
+                                            // Handle both upward and downward dragging
+                                            if value.translation.height < 0 {
+                                                verticalDragOffset = value.translation.height // Dragging up
+                                            } else if value.translation.height > 0 && detailedON {
+                                                verticalDragOffset = value.translation.height // Dragging down
+                                            }
+                                        }
+                                        .onEnded { value in
+                                            // Swipe up to open the capsule
+                                            if value.translation.height < -80 {
+                                                withAnimation(.easeInOut(duration: 0.3)) {
+                                                    detailedON = true
+                                                }
+                                            }
+                                            // Swipe down to close the capsule
+                                            if value.translation.height > 80 && detailedON {
+                                                withAnimation(.easeInOut(duration: 0.3)) {
+                                                    detailedON = false
+                                                }
+                                            }
+                                            // Reset drag offset
+                                            verticalDragOffset = 0
+                                        }
+                                )
                             }
                             
-                            .gesture(
-                                DragGesture()
-                                    .onChanged { value in
-                                        // Handle both upward and downward dragging
-                                        if value.translation.height < 0 {
-                                            verticalDragOffset = value.translation.height // Dragging up
-                                        } else if value.translation.height > 0 && detailedON {
-                                            verticalDragOffset = value.translation.height // Dragging down
-                                        }
-                                    }
-                                    .onEnded { value in
-                                        // Swipe up to open the capsule
-                                        if value.translation.height < -80 {
-                                            withAnimation(.easeInOut(duration: 0.3)) {
-                                                detailedON = true
-                                            }
-                                        }
-                                        // Swipe down to close the capsule
-                                        if value.translation.height > 80 && detailedON {
-                                            withAnimation(.easeInOut(duration: 0.3)) {
-                                                detailedON = false
-                                            }
-                                        }
-                                        // Reset drag offset
-                                        verticalDragOffset = 0
-                                    }
-                            )
+                            
                         }
                         
                         
+                        placeholder: {
+                            ProgressView() // Show loading while the image downloads
+                     
+                        
+                    }
+                       
+                    } else {
+                        Text("No cat image")
                     }
                     
-                    
-                    placeholder: {
-                        ProgressView() // Show loading while the image downloads
-                    }
-                } else {
-                    Text("No cat image")
                 }
+                .offset(x: dragOffset)
+                .gesture(
+                    DragGesture()
+                        .onChanged { value in
+                            dragOffset = value.translation.width // Track the swipe movement
+                        }
+                        .onEnded { value in
+                            if value.translation.width < -80 { // Swipe left to load next image
+                                viewModel.fetchCatImage()
+                            }
+                            withAnimation(.spring()) {
+                                dragOffset = 0 // Reset offset after swipe
+                                
+                                
+                                
+                            }
+                        }
+                )
                 
+                
+                //            Button{
+                //                           viewModel.fetchCatImage()
+                //            }label: {
+                //                ZStack{
+                //                    Capsule(style: .continuous)
+                //                        .foregroundStyle(.blue)
+                //                        .frame(width: 120, height: 50)
+                //
+                //                    Text("Next")
+                //                        .foregroundStyle(.white)
+                //
+                //
+                //                }
+                
+                //            }
+                //                       .buttonBorderShape(.capsule)
+                //                       .padding()
+                
+                
+                if !viewModel.isLoading {
+                    Label("Swipe up to see more details, or left to load next image", systemImage: "info.circle.fill")
+                        
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                        .padding()
+                }
+           
+           
+                
+            }.onAppear {
+                viewModel.fetchCatImage() // Fetch cat image when view appears
             }
-            .offset(x: dragOffset)
-            .gesture(
-                DragGesture()
-                    .onChanged { value in
-                        dragOffset = value.translation.width // Track the swipe movement
-                    }
-                    .onEnded { value in
-                        if value.translation.width < -80 { // Swipe left to load next image
-                            viewModel.fetchCatImage()
-                        }
-                        withAnimation(.spring()) {
-                            dragOffset = 0 // Reset offset after swipe
-                            
-                            
-                            
-                        }
-                    }
-            )
-            
-            
-            //            Button{
-            //                           viewModel.fetchCatImage()
-            //            }label: {
-            //                ZStack{
-            //                    Capsule(style: .continuous)
-            //                        .foregroundStyle(.blue)
-            //                        .frame(width: 120, height: 50)
-            //
-            //                    Text("Next")
-            //                        .foregroundStyle(.white)
-            //
-            //
-            //                }
-            
-            //            }
-            //                       .buttonBorderShape(.capsule)
-            //                       .padding()
-            
-            
-        }.onAppear {
-            viewModel.fetchCatImage() // Fetch cat image when view appears
-        }
+        
         
         
         
