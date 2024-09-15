@@ -30,7 +30,6 @@ struct CatView: View {
                             LottieView(animation: .named("cat1.json"))
                                 .playing()
                                 .frame(width: 200, height: 200)
-                                .offset(y: -40)
                             
                             
                             
@@ -118,7 +117,7 @@ struct CatView: View {
                             }
                             
                         } else {
-                            Text("No cat image")
+                           // Text("No cat image")
                         }
                         
                         
@@ -180,13 +179,7 @@ struct CatView: View {
                     }
                     
                 }
-//                    if !viewModel.isLoading {
-//                        Label("Swipe up to see more details, left to load next image or right to add the cat to your favorites", systemImage: "info.circle.fill")
-//                        
-//                            .font(.footnote)
-//                            .foregroundStyle(.secondary)
-//                            .padding()
-//                    }
+//                  
                     
                 
                 
