@@ -1,0 +1,99 @@
+//
+//  FavoritesView.swift
+//  CatImages
+//
+//  Created by Yuri Petrosyan on 9/15/24.
+//
+
+import SwiftUI
+
+struct FavoritesView: View {
+    @ObservedObject var viewModel = CatImagesViewModel()
+    
+    let columns = [GridItem(.flexible()), GridItem(.flexible())] // Two columns
+    
+    var body: some View {
+        NavigationView {
+            ScrollView {
+                LazyVGrid(columns: columns, spacing: 20) {
+                    ForEach(viewModel.favoriteCats, id: \.url) { cat in
+                        CatCardView(cat: cat) // Each card shows liked cats
+                    }
+                }
+                .padding()
+            }
+            .navigationTitle("Favorite Cats")
+        }
+    }
+}
+
+struct CatCardView: View {
+    let cat: CatImage
+    @State private var detailedON: Bool = false // To mimic the detailed view behavior
+    @State private var verticalDragOffset: CGFloat = 0.0
+    
+    var body: some View {
+        ZStack(alignment: .bottom) {
+            AsyncImage(url: URL(string: cat.url)) { image in
+                image
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 160, height: 220) // Size similar to the card in CatView
+                    .clipShape(RoundedRectangle(cornerRadius: 20))
+            } placeholder: {
+                ProgressView()
+                    .frame(width: 160, height: 220)
+                    .background(RoundedRectangle(cornerRadius: 20).fill(Color.gray.opacity(0.2)))
+            }
+
+            ZStack {
+                RoundedRectangle(cornerRadius: 15)
+                    .foregroundStyle(.ultraThinMaterial)
+                    .frame(height: detailedON ? 100 : 60) // Change height when detailed is on
+                
+                VStack(alignment: .leading, spacing: 5) {
+                    Text(cat.breeds.first?.name ?? "Unknown Breed")
+                        .font(.headline)
+                    if detailedON {
+                        Text("Origin: \(cat.breeds.first?.origin ?? "Unknown Origin")")
+                            .font(.subheadline)
+                        Text("Life Span: \(cat.breeds.first?.life_span ?? "Unknown")")
+                            .font(.subheadline)
+                    }
+                }
+                .padding(.horizontal)
+            }
+            .offset(y: detailedON ? 0 : 40)
+            .onTapGesture {
+                withAnimation(.easeInOut(duration: 0.3)) {
+                    detailedON.toggle()
+                }
+            }
+            .gesture(
+                DragGesture()
+                    .onChanged { value in
+                        if value.translation.height < 0 { // Only allow upward dragging
+                            verticalDragOffset = value.translation.height
+                        }
+                    }
+                    .onEnded { value in
+                        if value.translation.height < -50 {
+                            withAnimation(.easeInOut(duration: 0.3)) {
+                                detailedON = true
+                            }
+                        } else if value.translation.height > 50 && detailedON {
+                            withAnimation(.easeInOut(duration: 0.3)) {
+                                detailedON = false
+                            }
+                        }
+                        verticalDragOffset = 0
+                    }
+            )
+        }
+        .frame(width: 160, height: 220) // Size for each card in the grid
+    }
+}
+
+#Preview {
+    FavoritesView()
+}

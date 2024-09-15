@@ -20,8 +20,10 @@ struct CatView: View {
     
     var body: some View {
         
+        NavigationStack {
             VStack{
                 
+               
                 
                 ZStack(alignment: .bottom){
                     if viewModel.isLoading {
@@ -29,19 +31,21 @@ struct CatView: View {
                             .playing()
                             .frame(width: 200, height: 200)
                         
-                            
+                       
+                        
+                        
                     } else if let imageURL = viewModel.catImageUrl {
                         
                         AsyncImage(url: URL(string: imageURL)) { image in
                             
                             ZStack{
-                               
+                                
                                 
                                 image
                                     .resizable()
                                     .frame(width: 330, height: 430)
                                     .aspectRatio(contentMode: .fill)
-                                    //.scaledToFill()
+                                //.scaledToFill()
                                     .clipShape(RoundedRectangle(cornerRadius: 40))
                                 
                                 
@@ -49,7 +53,7 @@ struct CatView: View {
                                 
                                 // MARK: Info Capsule
                                 ZStack{
-                
+                                    
                                     
                                     RoundedRectangle(cornerRadius: 30)
                                     
@@ -57,7 +61,7 @@ struct CatView: View {
                                     
                                     infoView
                                     
-                                  
+                                    
                                     
                                 }
                                 .frame(width: detailedON ? 330 : 310, height: detailedON ? (430 - abs(verticalDragOffset)) : 80 - verticalDragOffset)
@@ -107,7 +111,7 @@ struct CatView: View {
                                         .playing()
                                         .opacity(0.8)
                                         .frame(width: 100, height: 100)
-
+                                    
                                 }
                                 
                             }
@@ -120,11 +124,11 @@ struct CatView: View {
                             LottieView(animation: .named("cat1.json"))
                                 .playing()
                                 .frame(width: 200, height: 200)
-                             // Show loading while the image downloads
-                     
+                            // Show loading while the image downloads
+                            
+                            
+                        }
                         
-                    }
-                       
                     } else {
                         Text("No cat image")
                     }
@@ -139,20 +143,22 @@ struct CatView: View {
                         .onEnded { value in
                             if value.translation.width < -80 { // Swipe left to load next image
                                 isDisliked = true
-                               
+                                
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
                                     isDisliked = false
+                                    //action here
+                                    likeCurrentCat()
                                     viewModel.fetchCatImage()
                                 }
                             } else if value.translation.width > 80 {
-
+                                
                                 isLiked = true
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                                     isLiked = false
                                     viewModel.fetchCatImage()
                                 }
                                 
-
+                                
                             }
                             withAnimation(.spring()) {
                                 dragOffset = 0 // Reset offset after swipe
@@ -160,20 +166,35 @@ struct CatView: View {
                         }
                 )
                 
-            
+                
                 if !viewModel.isLoading {
                     Label("Swipe up to see more details, left to load next image or right to add the cat to your favorites", systemImage: "info.circle.fill")
-                        
+                    
                         .font(.footnote)
                         .foregroundStyle(.secondary)
                         .padding()
                 }
-           
-           
+                
+                
                 
             }.onAppear {
                 viewModel.fetchCatImage() // Fetch cat image when view appears
             }
+            .toolbar {
+                ToolbarItem{                // Add navigation button to view favorites
+                    NavigationLink(destination: FavoritesView(viewModel: viewModel)) {
+                        Image(systemName: "star.fill")
+                            .padding()
+                           // .font(.title4)
+                            .background(Circle().foregroundStyle(.ultraThinMaterial)
+                                .frame(width: 40, height: 40))
+                            .foregroundColor(.white)
+                        
+                    }
+                    .padding()
+                }
+            }
+        }
         
         
         
@@ -236,6 +257,30 @@ struct CatView: View {
         }
         
        // .frame( height: detailedON ? 420 : 30)
+    }
+    
+    func likeCurrentCat() {
+        if let url = viewModel.catImageUrl,
+           let breedName = viewModel.breedName,
+           let breedOrigin = viewModel.breedOrigin,
+           let breedDescription = viewModel.breedDescription,
+           let breedTemperament = viewModel.breedTemperament,
+           let breedLifespan = viewModel.breedLifespan,
+           let dogFriendly = viewModel.dog_friendly {
+
+            let currentCat = CatImage(
+                url: url,
+                breeds: [Breed(
+                    name: breedName,
+                    origin: breedOrigin,
+                    description: breedDescription,
+                    temperament: breedTemperament,
+                    life_span: breedLifespan,
+                    dog_friendly: dogFriendly
+                )]
+            )
+            viewModel.likeCat(cat: currentCat)
+        }
     }
     
 }
