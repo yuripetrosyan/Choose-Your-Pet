@@ -19,6 +19,17 @@ class CatImagesViewModel: ObservableObject {
     @Published var dog_friendly: Int?
     @Published var isLoading: Bool = false
     
+    // Array to store favorite cats
+    @Published var favoriteCats: [CatImage] = []
+    
+    // Function to like a cat
+    func likeCat(cat: CatImage) {
+        if !favoriteCats.contains(where: { $0.url == cat.url }) {
+            favoriteCats.append(cat)
+        }
+    }
+    
+    
     func fetchCatImage() {
         isLoading = true
         let urlString = "https://api.thecatapi.com/v1/images/search"
@@ -55,7 +66,7 @@ class CatImagesViewModel: ObservableObject {
                                 }
                             }
                         } else {
-                            print("No breed information available for this cat image. Trying again...")
+                           // print("No breed information available for this cat image. Trying again...")
                             self?.fetchCatImage() // Retry fetching if no breed info
                         }
 

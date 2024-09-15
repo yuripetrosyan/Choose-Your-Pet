@@ -14,6 +14,10 @@ struct CatView: View {
     @State private var dragOffset: CGFloat = 0.0 // Used to track the swipe gesture
     @State private var verticalDragOffset: CGFloat = 0.0
     
+    @State private var isLiked: Bool = false
+    @State private var isDisliked: Bool = false
+
+    
     var body: some View {
         
             VStack{
@@ -45,11 +49,15 @@ struct CatView: View {
                                 
                                 // MARK: Info Capsule
                                 ZStack{
+                
+                                    
                                     RoundedRectangle(cornerRadius: 30)
                                     
                                         .foregroundStyle(.ultraThinMaterial)
                                     
                                     infoView
+                                    
+                                  
                                     
                                 }
                                 .frame(width: detailedON ? 330 : 310, height: detailedON ? (430 - abs(verticalDragOffset)) : 80 - verticalDragOffset)
@@ -87,6 +95,21 @@ struct CatView: View {
                                             verticalDragOffset = 0
                                         }
                                 )
+                                //Animation when Liked
+                                if isLiked {
+                                    LottieView(animation: .named("heart.json"))
+                                        .playing()
+                                        .frame(width: 300, height: 300)
+                                }
+                                //Animation when disliked
+                                else if isDisliked {
+                                    LottieView(animation: .named("xmark.json"))
+                                        .playing()
+                                        .opacity(0.8)
+                                        .frame(width: 100, height: 100)
+
+                                }
+                                
                             }
                             
                             
@@ -94,7 +117,10 @@ struct CatView: View {
                         
                         
                         placeholder: {
-                            ProgressView() // Show loading while the image downloads
+                            LottieView(animation: .named("cat1.json"))
+                                .playing()
+                                .frame(width: 200, height: 200)
+                             // Show loading while the image downloads
                      
                         
                     }
@@ -112,20 +138,31 @@ struct CatView: View {
                         }
                         .onEnded { value in
                             if value.translation.width < -80 { // Swipe left to load next image
-                                viewModel.fetchCatImage()
+                                isDisliked = true
+                               
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                                    isDisliked = false
+                                    viewModel.fetchCatImage()
+                                }
+                            } else if value.translation.width > 80 {
+
+                                isLiked = true
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                                    isLiked = false
+                                    viewModel.fetchCatImage()
+                                }
+                                
+
                             }
                             withAnimation(.spring()) {
                                 dragOffset = 0 // Reset offset after swipe
-                                
-                                
-                                
                             }
                         }
                 )
                 
             
                 if !viewModel.isLoading {
-                    Label("Swipe up to see more details, or left to load next image", systemImage: "info.circle.fill")
+                    Label("Swipe up to see more details, left to load next image or right to add the cat to your favorites", systemImage: "info.circle.fill")
                         
                         .font(.footnote)
                         .foregroundStyle(.secondary)
