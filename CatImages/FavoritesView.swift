@@ -10,14 +10,19 @@ import SwiftUI
 struct FavoritesView: View {
     @ObservedObject var viewModel = CatImagesViewModel()
     
+    // For preview, use mock data
+    init() {
+        viewModel.favoriteCats = CatImagesViewModel.mockData // Inject mock data
+    }
+
     let columns = [GridItem(.flexible()), GridItem(.flexible())] // Two columns
-    
+
     var body: some View {
         NavigationView {
             ScrollView {
                 LazyVGrid(columns: columns, spacing: 20) {
                     ForEach(viewModel.favoriteCats, id: \.url) { cat in
-                        CatCardView(cat: cat) // Each card shows liked cats
+                        CatCardView(cat: cat) // Reuse the card view to display liked cats
                     }
                 }
                 .padding()
@@ -49,21 +54,23 @@ struct CatCardView: View {
             ZStack {
                 RoundedRectangle(cornerRadius: 15)
                     .foregroundStyle(.ultraThinMaterial)
-                    .frame(height: detailedON ? 100 : 60) // Change height when detailed is on
+                    .frame(height: detailedON ? 220 : 60) // Change height when detailed is on
                 
                 VStack(alignment: .leading, spacing: 5) {
                     Text(cat.breeds.first?.name ?? "Unknown Breed")
                         .font(.headline)
                     if detailedON {
+                       
                         Text("Origin: \(cat.breeds.first?.origin ?? "Unknown Origin")")
                             .font(.subheadline)
                         Text("Life Span: \(cat.breeds.first?.life_span ?? "Unknown")")
                             .font(.subheadline)
+                        
                     }
                 }
                 .padding(.horizontal)
             }
-            .offset(y: detailedON ? 0 : 40)
+          
             .onTapGesture {
                 withAnimation(.easeInOut(duration: 0.3)) {
                     detailedON.toggle()
@@ -96,4 +103,10 @@ struct CatCardView: View {
 
 #Preview {
     FavoritesView()
+   
+}
+
+#Preview{
+    CatCardView(cat: CatImage(url: "https://cdn2.thecatapi.com/images/0XYvRd7oD.jpg", breeds: []))
+
 }

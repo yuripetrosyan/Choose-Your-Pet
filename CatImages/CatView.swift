@@ -182,7 +182,8 @@ struct CatView: View {
             }
             .toolbar {
                 ToolbarItem{                // Add navigation button to view favorites
-                    NavigationLink(destination: FavoritesView(viewModel: viewModel)) {
+                  /*  NavigationLink(destination: FavoritesView(viewModel: viewModel))*/
+                    NavigationLink(destination: FavoritesView()){
                         Image(systemName: "star.fill")
                             .padding()
                            // .font(.title4)

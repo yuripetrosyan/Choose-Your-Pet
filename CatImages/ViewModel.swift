@@ -76,3 +76,127 @@ class CatImagesViewModel: ObservableObject {
                 }.resume()
             }
         }
+
+
+// Mock data for testing purposes
+extension CatImagesViewModel {
+    static let mockData: [CatImage] = [
+        CatImage(
+            url: "https://cdn2.thecatapi.com/images/0XYvRd7oD.jpg",
+            breeds: [
+                Breed(
+                    name: "Abyssinian",
+                    origin: "Egypt",
+                    description: "A short-haired breed of domestic cat.",
+                    temperament: "Active, Energetic, Independent, Intelligent, Gentle",
+                    life_span: "14 - 15",
+                    dog_friendly: 5
+                )
+            ]
+        ),
+        CatImage(
+            url: "https://cdn2.thecatapi.com/images/JFPROfGtQ.jpg",
+            breeds: [
+                Breed(
+                    name: "Siberian",
+                    origin: "Russia",
+                    description: "A large, strong cat with a dense triple coat.",
+                    temperament: "Curious, Calm, Affectionate, Intelligent",
+                    life_span: "12 - 15",
+                    dog_friendly: 4
+                )
+            ]
+        ),
+        CatImage(
+            url: "https://cdn2.thecatapi.com/images/MTY3ODQ4OQ.jpg",
+            breeds: [
+                Breed(
+                    name: "Bengal",
+                    origin: "United States",
+                    description: "A wild-looking, sleek, and agile breed.",
+                    temperament: "Alert, Agile, Energetic, Demanding, Intelligent",
+                    life_span: "10 - 16",
+                    dog_friendly: 3
+                )
+            ]
+        ),
+        CatImage(
+            url: "https://cdn2.thecatapi.com/images/0XYvRd7oD.jpg",
+            breeds: [
+                Breed(
+                    name: "Abyssinian",
+                    origin: "Egypt",
+                    description: "A short-haired breed of domestic cat.",
+                    temperament: "Active, Energetic, Independent, Intelligent, Gentle",
+                    life_span: "14 - 15",
+                    dog_friendly: 5
+                )
+            ]
+        ),
+        CatImage(
+            url: "https://cdn2.thecatapi.com/images/JFPROfGtQ.jpg",
+            breeds: [
+                Breed(
+                    name: "Siberian",
+                    origin: "Russia",
+                    description: "A large, strong cat with a dense triple coat.",
+                    temperament: "Curious, Calm, Affectionate, Intelligent",
+                    life_span: "12 - 15",
+                    dog_friendly: 4
+                )
+            ]
+        ),
+        CatImage(
+            url: "https://cdn2.thecatapi.com/images/MTY3ODQ4OQ.jpg",
+            breeds: [
+                Breed(
+                    name: "Bengal",
+                    origin: "United States",
+                    description: "A wild-looking, sleek, and agile breed.",
+                    temperament: "Alert, Agile, Energetic, Demanding, Intelligent",
+                    life_span: "10 - 16",
+                    dog_friendly: 3
+                )
+            ]
+        ),
+        CatImage(
+            url: "https://cdn2.thecatapi.com/images/0XYvRd7oD.jpg",
+            breeds: [
+                Breed(
+                    name: "Abyssinian",
+                    origin: "Egypt",
+                    description: "A short-haired breed of domestic cat.",
+                    temperament: "Active, Energetic, Independent, Intelligent, Gentle",
+                    life_span: "14 - 15",
+                    dog_friendly: 5
+                )
+            ]
+        ),
+        CatImage(
+            url: "https://cdn2.thecatapi.com/images/JFPROfGtQ.jpg",
+            breeds: [
+                Breed(
+                    name: "Siberian",
+                    origin: "Russia",
+                    description: "A large, strong cat with a dense triple coat.",
+                    temperament: "Curious, Calm, Affectionate, Intelligent",
+                    life_span: "12 - 15",
+                    dog_friendly: 4
+                )
+            ]
+        ),
+        CatImage(
+            url: "https://cdn2.thecatapi.com/images/MTY3ODQ4OQ.jpg",
+            breeds: [
+                Breed(
+                    name: "Bengal",
+                    origin: "United States",
+                    description: "A wild-looking, sleek, and agile breed.",
+                    temperament: "Alert, Agile, Energetic, Demanding, Intelligent",
+                    life_span: "10 - 16",
+                    dog_friendly: 3
+                )
+            ]
+        )
+    ]
+}
