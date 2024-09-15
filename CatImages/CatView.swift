@@ -16,183 +16,217 @@ struct CatView: View {
     
     @State private var isLiked: Bool = false
     @State private var isDisliked: Bool = false
-
+    @State private var showAlert = false
     
     var body: some View {
         
         NavigationStack {
             VStack{
                 
-               
-                
-                ZStack(alignment: .bottom){
-                    if viewModel.isLoading {
-                        LottieView(animation: .named("cat1.json"))
-                            .playing()
-                            .frame(width: 200, height: 200)
-                        
-                       
-                        
-                        
-                    } else if let imageURL = viewModel.catImageUrl {
-                        
-                        AsyncImage(url: URL(string: imageURL)) { image in
-                            
-                            ZStack{
-                                
-                                
-                                image
-                                    .resizable()
-                                    .frame(width: 330, height: 430)
-                                    .aspectRatio(contentMode: .fill)
-                                //.scaledToFill()
-                                    .clipShape(RoundedRectangle(cornerRadius: 40))
-                                
-                                
-                                
-                                
-                                // MARK: Info Capsule
-                                ZStack{
-                                    
-                                    
-                                    RoundedRectangle(cornerRadius: 30)
-                                    
-                                        .foregroundStyle(.ultraThinMaterial)
-                                    
-                                    infoView
-                                    
-                                    
-                                    
-                                }
-                                .frame(width: detailedON ? 330 : 310, height: detailedON ? (430 - abs(verticalDragOffset)) : 80 - verticalDragOffset)
-                                .offset(y: detailedON ? 0 : 165 + verticalDragOffset)
-                                .onTapGesture {
-                                    withAnimation(.easeInOut(duration: 0.3)){
-                                        detailedON.toggle()
-                                    }
-                                }
-                                
-                                .gesture(
-                                    DragGesture()
-                                        .onChanged { value in
-                                            // Handle both upward and downward dragging
-                                            if value.translation.height < 0 {
-                                                verticalDragOffset = value.translation.height // Dragging up
-                                            } else if value.translation.height > 0 && detailedON {
-                                                verticalDragOffset = value.translation.height // Dragging down
-                                            }
-                                        }
-                                        .onEnded { value in
-                                            // Swipe up to open the capsule
-                                            if value.translation.height < -80 {
-                                                withAnimation(.easeInOut(duration: 0.3)) {
-                                                    detailedON = true
-                                                }
-                                            }
-                                            // Swipe down to close the capsule
-                                            if value.translation.height > 80 && detailedON {
-                                                withAnimation(.easeInOut(duration: 0.3)) {
-                                                    detailedON = false
-                                                }
-                                            }
-                                            // Reset drag offset
-                                            verticalDragOffset = 0
-                                        }
-                                )
-                                //Animation when Liked
-                                if isLiked {
-                                    LottieView(animation: .named("heart.json"))
-                                        .playing()
-                                        .frame(width: 300, height: 300)
-                                }
-                                //Animation when disliked
-                                else if isDisliked {
-                                    LottieView(animation: .named("xmark.json"))
-                                        .playing()
-                                        .opacity(0.8)
-                                        .frame(width: 100, height: 100)
-                                    
-                                }
-                                
-                            }
-                            
-                            
-                        }
-                        
-                        
-                        placeholder: {
+                ZStack{
+                    
+                    ZStack(alignment: .bottom){
+                        if viewModel.isLoading {
                             LottieView(animation: .named("cat1.json"))
                                 .playing()
                                 .frame(width: 200, height: 200)
-                            // Show loading while the image downloads
+                                .offset(y: -40)
                             
                             
+                            
+                            
+                        } else if let imageURL = viewModel.catImageUrl {
+                            
+                            AsyncImage(url: URL(string: imageURL)) { image in
+                                
+                                ZStack{
+                                    
+                                    
+                                    image
+                                        .resizable()
+                                        .frame(width: 330, height: 430)
+                                        .aspectRatio(contentMode: .fill)
+                                    //.scaledToFill()
+                                        .clipShape(RoundedRectangle(cornerRadius: 40))
+                                    
+                                    
+                                    
+                                    
+                                    // MARK: Info Capsule
+                                    ZStack{
+                                        
+                                        
+                                        RoundedRectangle(cornerRadius: 30)
+                                        
+                                            .foregroundStyle(.ultraThinMaterial)
+                                        
+                                        infoView
+                                        
+                                        
+                                        
+                                    }
+                                    .frame(width: detailedON ? 330 : 310, height: detailedON ? (430 - abs(verticalDragOffset)) : 80 - verticalDragOffset)
+                                    .offset(y: detailedON ? 0 : 165 + verticalDragOffset)
+                                    .onTapGesture {
+                                        withAnimation(.easeInOut(duration: 0.3)){
+                                            detailedON.toggle()
+                                        }
+                                    }
+                                    
+                                    .gesture(
+                                        DragGesture()
+                                            .onChanged { value in
+                                                // Handle both upward and downward dragging
+                                                if value.translation.height < 0 {
+                                                    verticalDragOffset = value.translation.height // Dragging up
+                                                } else if value.translation.height > 0 && detailedON {
+                                                    verticalDragOffset = value.translation.height // Dragging down
+                                                }
+                                            }
+                                            .onEnded { value in
+                                                // Swipe up to open the capsule
+                                                if value.translation.height < -80 {
+                                                    withAnimation(.easeInOut(duration: 0.3)) {
+                                                        detailedON = true
+                                                    }
+                                                }
+                                                // Swipe down to close the capsule
+                                                if value.translation.height > 80 && detailedON {
+                                                    withAnimation(.easeInOut(duration: 0.3)) {
+                                                        detailedON = false
+                                                    }
+                                                }
+                                                // Reset drag offset
+                                                verticalDragOffset = 0
+                                            }
+                                    )
+                                    
+                                    
+                                }
+                                
+                                
+                            }
+                            
+                            
+                            placeholder: {
+                                LottieView(animation: .named("cat1.json"))
+                                    .playing()
+                                    .frame(width: 200, height: 200)
+                                // Show loading while the image downloads
+                                
+                                
+                            }
+                            
+                        } else {
+                            Text("No cat image")
                         }
                         
-                    } else {
-                        Text("No cat image")
+                        
+                        
+                    }
+                    .offset(x: dragOffset)
+                    .gesture(
+                        DragGesture()
+                            .onChanged { value in
+                                dragOffset = value.translation.width * 1.7 // Track the swipe movement
+                            }
+                            .onEnded { value in
+                                if value.translation.width < -80 { // Swipe left to load next image
+                                    isDisliked = true
+                                    
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                                        isDisliked = false
+                                        
+                                        viewModel.fetchCatImage()
+                                    }
+                                } else if value.translation.width > 80 {
+                                    
+                                    isLiked = true
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                                        isLiked = false
+                                        //action here
+                                        likeCurrentCat()
+                                        viewModel.fetchCatImage()
+                                    }
+                                    
+                                    
+                                }
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 1.1) {
+                                    withAnimation(.spring()) {
+                                        dragOffset = 0 // Reset offset after swipe
+                                    }
+                                }
+                            }
+                    )
+                    
+                    
+                    
+                    //Animation when Liked
+                    if isLiked {
+                        LottieView(animation: .named("heart.json"))
+                            .playing()
+                            .frame(width: 300, height: 300)
+                            .offset(x: dragOffset / 4)
+                    }
+                    //Animation when disliked
+                    else if isDisliked {
+                        LottieView(animation: .named("xmark.json"))
+                            .playing()
+                            .opacity(0.8)
+                            .frame(width: 100, height: 100)
+                            .offset(x: dragOffset / 4)
+
+                        
                     }
                     
                 }
-                .offset(x: dragOffset)
-                .gesture(
-                    DragGesture()
-                        .onChanged { value in
-                            dragOffset = value.translation.width // Track the swipe movement
-                        }
-                        .onEnded { value in
-                            if value.translation.width < -80 { // Swipe left to load next image
-                                isDisliked = true
-                                
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                                    isDisliked = false
-                                    //action here
-                                    likeCurrentCat()
-                                    viewModel.fetchCatImage()
-                                }
-                            } else if value.translation.width > 80 {
-                                
-                                isLiked = true
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                                    isLiked = false
-                                    viewModel.fetchCatImage()
-                                }
-                                
-                                
-                            }
-                            withAnimation(.spring()) {
-                                dragOffset = 0 // Reset offset after swipe
-                            }
-                        }
-                )
-                
-                
-                if !viewModel.isLoading {
-                    Label("Swipe up to see more details, left to load next image or right to add the cat to your favorites", systemImage: "info.circle.fill")
+//                    if !viewModel.isLoading {
+//                        Label("Swipe up to see more details, left to load next image or right to add the cat to your favorites", systemImage: "info.circle.fill")
+//                        
+//                            .font(.footnote)
+//                            .foregroundStyle(.secondary)
+//                            .padding()
+//                    }
                     
-                        .font(.footnote)
-                        .foregroundStyle(.secondary)
-                        .padding()
-                }
-                
                 
                 
             }.onAppear {
                 viewModel.fetchCatImage() // Fetch cat image when view appears
             }
+            .alert(isPresented: $showAlert) { // Show the alert when showAlert is true
+                Alert(
+                    title: Text("Information"),
+                    message: Text("Swipe up to see more details, left to load next image or right to add the cat to your favorites"),
+                    dismissButton: .default(Text("Close"))
+                )
+            }
             .toolbar {
-                ToolbarItem{                // Add navigation button to view favorites
-                  /*  NavigationLink(destination: FavoritesView(viewModel: viewModel))*/
-                    NavigationLink(destination: FavoritesView()){
+                ToolbarItem(placement: .topBarTrailing){                // Add navigation button to view favorites
+                    NavigationLink(destination: FavoritesView(viewModel: viewModel)){
+                    //NavigationLink(destination: FavoritesView()){
                         Image(systemName: "star.fill")
-                            .padding()
                            // .font(.title4)
-                            .background(Circle().foregroundStyle(.ultraThinMaterial)
-                                .frame(width: 40, height: 40))
-                            .foregroundColor(.white)
+                           // .background(Circle().foregroundStyle(.ultraThinMaterial)
+                                //.frame(width: 40, height: 40))
+                            .foregroundColor(.yellow)
                         
                     }
-                    .padding()
+                    
+                }
+                
+                ToolbarItem(placement: .topBarLeading){
+                    //Info button
+                    Button {
+                        showAlert = true
+                        
+                    } label: {
+                        Image(systemName: "info.circle.fill")
+                            .foregroundStyle(.white)
+                    }
+              
+
+
+                    
                 }
             }
         }

@@ -11,9 +11,9 @@ struct FavoritesView: View {
     @ObservedObject var viewModel = CatImagesViewModel()
     
     // For preview, use mock data
-    init() {
-        viewModel.favoriteCats = CatImagesViewModel.mockData // Inject mock data
-    }
+//    init() {
+//        viewModel.favoriteCats = CatImagesViewModel.mockData // Inject mock data
+//    }
 
     let columns = [GridItem(.flexible()), GridItem(.flexible())] // Two columns
 
