@@ -39,12 +39,10 @@ struct CatView: View {
                             AsyncImage(url: URL(string: imageURL)) { image in
                                 
                                 ZStack{
-                                    
-                                    
-                                    image
+                                     image
                                         .resizable()
+                                        .scaledToFill()
                                         .frame(width: 330, height: 430)
-                                        .aspectRatio(contentMode: .fill)
                                     //.scaledToFill()
                                         .clipShape(RoundedRectangle(cornerRadius: 40))
                                     
