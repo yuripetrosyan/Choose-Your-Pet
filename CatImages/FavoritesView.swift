@@ -8,14 +8,15 @@
 import SwiftUI
 
 struct FavoritesView: View {
-    @ObservedObject var viewModel = CatImagesViewModel()
+    @ObservedObject var viewModel =  CatImagesViewModel()
     
-    // For preview, use mock data
+     //For preview, use mock data
 //    init() {
 //        viewModel.favoriteCats = CatImagesViewModel.mockData // Inject mock data
 //    }
 
     let columns = [GridItem(.flexible()), GridItem(.flexible())] // Two columns
+    //@State private var favIsOn = false
 
     var body: some View {
         NavigationView {
@@ -28,13 +29,17 @@ struct FavoritesView: View {
                 .padding()
             }
             .navigationTitle("Favorite Cats")
+//        }.toolbar {
+//            ToolbarItem(placement: .navigation) {
+//                CustomSwitchView(favIsON: $favIsOn)
+//            }
         }
     }
 }
 
 struct CatCardView: View {
     let cat: CatImage
-    @State private var detailedON: Bool = false // To mimic the detailed view behavior
+    @State private var detailedON: Bool = false
     @State private var verticalDragOffset: CGFloat = 0.0
     
     var body: some View {
@@ -43,7 +48,7 @@ struct CatCardView: View {
                 image
                     .resizable()
                     .scaledToFill()
-                    .frame(width: 160, height: 220) // Size similar to the card in CatView
+                    .frame(width: 160, height: 220) 
                     .clipShape(RoundedRectangle(cornerRadius: 20))
             } placeholder: {
                 ProgressView()
