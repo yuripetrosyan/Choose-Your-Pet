@@ -30,6 +30,8 @@ class CatImagesViewModel: ObservableObject {
     }
     
     
+    
+    
     func fetchCatImage() {
         isLoading = true
         let urlString = "https://api.thecatapi.com/v1/images/search"
