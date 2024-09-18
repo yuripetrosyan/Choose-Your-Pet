@@ -14,6 +14,8 @@ struct ControllersView: View {
     var onDetails: () -> Void
     var infoON: () -> Void
     
+    
+    
     var body: some View {
         HStack(spacing: 15){
             
@@ -53,12 +55,14 @@ struct ControllersView: View {
 }
 
 struct CustomButton: View {
+    
     var imageName: String
     var backgroundWidth: CGFloat
     var foregroundSize: CGFloat
     var color: Color
     
-    
+    @State var isTapped: Bool = false
+        
     
     var body: some View {
         ZStack{
@@ -66,18 +70,28 @@ struct CustomButton: View {
                 .stroke(lineWidth: 2)
                 .foregroundStyle(color)
                 .frame(width: backgroundWidth, height: backgroundWidth)
+                .background(Circle().foregroundColor(isTapped ? color : .clear))
                 .shadow(color: color, radius: 5)
             
             
             Image(systemName: imageName)
                 .font(.system(size: foregroundSize))
-                .foregroundStyle(color)
-            
+                .foregroundStyle(isTapped ? .white : color)
             
         }
+//         .onTapGesture {
+//            withAnimation(.easeInOut) {
+//                isTapped.toggle() // Toggle the fill when tapped
+//                DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+//                    withAnimation(.easeInOut) {
+//                        isTapped.toggle()
+//                    }
+//                }
+//            }
+//        }
     }
 }
 
-//#Preview {
-//    ControllersView()
-//}
+#Preview {
+    ControllersView(onDislike: {print("Action")}, onLike: {print("Action")}, onDetails: {print("Action")}, infoON: {print("Action")})
+}

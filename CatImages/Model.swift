@@ -10,7 +10,7 @@ import Foundation
 
 struct CatImage: Codable {
     let url: String
-    let breeds: [Breed] // Array because there can be multiple breeds
+    let breeds: [Breed]
 
 }
 

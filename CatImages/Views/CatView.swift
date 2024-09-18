@@ -35,6 +35,7 @@ struct CatView: View {
                                         .frame(width: geo.size.width * 0.95, height: geo.size.width * 1.5)
                                         .offset(y: geo.size.height / 4)
                                 } else if let imageURL = viewModel.catImageUrl {
+                                    //Cat card
                                     AsyncImage(url: URL(string: imageURL)) { image in
                                         ZStack(alignment: .bottom){
                                             image
