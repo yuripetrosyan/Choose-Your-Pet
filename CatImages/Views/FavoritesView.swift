@@ -10,9 +10,10 @@ import SwiftUI
 struct FavoritesView: View {
     @ObservedObject var viewModel =  CatImagesViewModel()
     
-     //For preview, use mock data
+     //For preview, use mock data,
+     // Inject mock data
 //    init() {
-//        viewModel.favoriteCats = CatImagesViewModel.mockData // Inject mock data
+//        viewModel.favoriteCats = CatImagesViewModel.mockData
 //    }
 
     let columns = [GridItem(.flexible()), GridItem(.flexible())] // Two columns
@@ -24,8 +25,20 @@ struct FavoritesView: View {
                 LazyVGrid(columns: columns, spacing: 20) {
                     ForEach(viewModel.favoriteCats, id: \.url) { cat in
                         CatCardView(cat: cat) // Reuse the card view to display liked cats
+                            
+                            .contentShape(.contextMenuPreview, RoundedRectangle(cornerRadius: 20))
+                            .contextMenu{
+                                Button(role: .destructive, action: {
+                                       viewModel.deleteCat(cat: cat)
+                                }) {
+                                    Text("Delete")
+                                }
+                                
+                            }
+                           
                     }
                 }
+                
                 .padding()
             }
             .navigationTitle("Favorite Cats")

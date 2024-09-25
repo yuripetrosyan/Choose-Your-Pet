@@ -29,8 +29,10 @@ class CatImagesViewModel: ObservableObject {
         }
     }
     
-    
-    
+    // Function to Delete a cat from favouriste
+    func deleteCat(cat: CatImage) {
+        favoriteCats.removeAll(where: { $0.url == cat.url })
+    }
     
     func fetchCatImage() {
         isLoading = true
