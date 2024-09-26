@@ -9,7 +9,7 @@ import Observation
 
 class PetImagesViewModel: ObservableObject {
     
-    private var api: PetAPI
+    
 
     @Published var imageUrl: String?
     @Published var breedName: String?
@@ -20,18 +20,8 @@ class PetImagesViewModel: ObservableObject {
     @Published var dog_friendly: Int?
     @Published var isLoading: Bool = false
     
-    // Array to store favorite cats -> Change to pets soon
+    // Array to store favorite cats
     @Published var favoriteCats: [CatImage] = []
-    
-    init(api: PetAPI) {
-            self.api = api
-        }
-
-    // Function to switch APIs
-        func switchAPI(to newAPI: PetAPI) {
-            self.api = newAPI
-        }
-  
     
     // Function to like a cat
     func likeCat(cat: CatImage) {
