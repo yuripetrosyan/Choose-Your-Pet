@@ -173,14 +173,17 @@ struct CatView: View {
                         
                         ToolbarItem(placement: .navigation) {
                             VersionMenu(catIsON: $catIsON)
+                            //
+                               
                         }
                         ToolbarItem(placement: .navigation) {
                             HStack{
                                 Spacer()
                                 CustomSwitchView(favIsON: $favIsON)
+                                    .padding(.leading, -65)
                                 Spacer()
                             }
-                            .frame(width: geo.size.width / 1.9)
+                            .frame(width: geo.size.width )
                         }
                     }
                     if favIsON {

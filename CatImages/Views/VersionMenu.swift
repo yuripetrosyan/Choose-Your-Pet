@@ -15,9 +15,10 @@ struct VersionMenu: View {
     var body: some View {
         ZStack{
             Circle()
-                .fill(.ultraThinMaterial)
+                .fill(.white)
                 .frame(width: 50, height: 50)
             VStack{
+                
                 LottieView(animation: .named(catIsON ? "catVersion.json" : "dogVersion.json"))
                     .playing()
             }
