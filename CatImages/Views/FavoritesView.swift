@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct FavoritesView: View {
-    @ObservedObject var viewModel =  CatImagesViewModel()
+    @ObservedObject var viewModel =  PetImagesViewModel()
     
      //For preview, use mock data,
      // Inject mock data

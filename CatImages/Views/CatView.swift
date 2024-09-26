@@ -9,7 +9,7 @@ import SwiftUI
 import Lottie
 
 struct CatView: View {
-    @ObservedObject var viewModel = CatImagesViewModel()
+    @ObservedObject var viewModel = PetImagesViewModel()
     @State private var detailedON: Bool = false
     @State private var dragOffset: CGFloat = 0.0 // Used to track the swipe gesture
     @State private var verticalDragOffset: CGFloat = 0.0
@@ -35,7 +35,7 @@ struct CatView: View {
                                         //.background(Rectangle())
                                         .frame(width: geo.size.width * 0.95, height: geo.size.width * 1.5)
                                         .offset(y: geo.size.height / 4)
-                                } else if let imageURL = viewModel.catImageUrl {
+                                } else if let imageURL = viewModel.imageUrl {
                                     //Cat card
                                     AsyncImage(url: URL(string: imageURL)) { image in
                                         ZStack(alignment: .bottom){
@@ -236,7 +236,7 @@ struct CatView: View {
     }
     
     func likeCurrentCat() {
-        if let url = viewModel.catImageUrl,
+        if let url = viewModel.imageUrl,
            let breedName = viewModel.breedName,
            let breedOrigin = viewModel.breedOrigin,
            let breedDescription = viewModel.breedDescription,

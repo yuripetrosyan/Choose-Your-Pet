@@ -7,8 +7,11 @@
 import Foundation
 import Observation
 
-class CatImagesViewModel: ObservableObject {
-    @Published var catImageUrl: String?
+class PetImagesViewModel: ObservableObject {
+    
+    private var api: PetAPI
+
+    @Published var imageUrl: String?
     @Published var breedName: String?
     @Published var breedOrigin: String?
     @Published var breedDescription: String?
@@ -17,8 +20,18 @@ class CatImagesViewModel: ObservableObject {
     @Published var dog_friendly: Int?
     @Published var isLoading: Bool = false
     
-    // Array to store favorite cats
+    // Array to store favorite cats -> Change to pets soon
     @Published var favoriteCats: [CatImage] = []
+    
+    init(api: PetAPI) {
+            self.api = api
+        }
+
+    // Function to switch APIs
+        func switchAPI(to newAPI: PetAPI) {
+            self.api = newAPI
+        }
+  
     
     // Function to like a cat
     func likeCat(cat: CatImage) {
@@ -60,7 +73,7 @@ class CatImagesViewModel: ObservableObject {
                 DispatchQueue.main.async {
                     // Find the first cat image that has breed information
                     if let catImageWithBreed = catImages.first(where: { !$0.breeds.isEmpty }) {
-                        self?.catImageUrl = catImageWithBreed.url
+                        self?.imageUrl = catImageWithBreed.url
                         if let breed = catImageWithBreed.breeds.first {
                             self?.breedName = breed.name
                             self?.breedOrigin = breed.origin
@@ -82,7 +95,7 @@ class CatImagesViewModel: ObservableObject {
 
 
  //Mock data for testing purposes
-extension CatImagesViewModel {
+extension PetImagesViewModel {
     static let mockData: [CatImage] = [
         CatImage(
             url: "https://cdn2.thecatapi.com/images/0XYvRd7oD.jpg",
