@@ -7,9 +7,7 @@
 import Foundation
 import Observation
 
-
 class CatImagesViewModel: ObservableObject {
-    
     @Published var catImageUrl: String?
     @Published var breedName: String?
     @Published var breedOrigin: String?

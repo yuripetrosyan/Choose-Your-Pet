@@ -19,6 +19,7 @@ struct CatView: View {
     @State private var showAlert = false
     
     @State var favIsON: Bool = false
+    @State var catIsON: Bool = true
     
     var body: some View {
         GeometryReader { geo in
@@ -167,13 +168,19 @@ struct CatView: View {
                             dismissButton: .default(Text("Close"))
                         )
                     }
+                    //MARK: Toolbar
                     .toolbar {
+                        
+                        ToolbarItem(placement: .navigation) {
+                            VersionMenu(catIsON: $catIsON)
+                        }
                         ToolbarItem(placement: .navigation) {
                             HStack{
                                 Spacer()
                                 CustomSwitchView(favIsON: $favIsON)
                                 Spacer()
-                            }.frame(width: geo.size.width)
+                            }
+                            .frame(width: geo.size.width / 1.9)
                         }
                     }
                     if favIsON {
