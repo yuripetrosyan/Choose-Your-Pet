@@ -21,7 +21,7 @@ struct DogView: View {
     @State private var showAlert = false
     
     @State var favIsON: Bool = false
-    @State var catIsON: Bool = true
+    @Binding var catIsON: Bool
     
     var body: some View {
         GeometryReader { geo in
@@ -263,5 +263,5 @@ struct DogView: View {
 
 
 #Preview {
-    DogView()
+    DogView(catIsON: .constant(false))
 }

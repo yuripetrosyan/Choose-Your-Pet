@@ -19,9 +19,11 @@ struct CatView: View {
     @State private var showAlert = false
     
     @State var favIsON: Bool = false
-    @State var catIsON: Bool = true
+   //Change to state
+    @Binding var catIsON: Bool 
     
     var body: some View {
+        
         GeometryReader { geo in
             NavigationStack {
                 ZStack{
@@ -157,12 +159,6 @@ struct CatView: View {
                         .padding(.bottom, 30)
                         
                         Spacer()
-                        
-                        NavigationLink {
-                            DogView(viewModel: DogViewModel(), favIsON: false, catIsON: false)
-                        } label: {
-                            Text("Move to Dogs")
-                        }
 
                     }
                     .onAppear {
@@ -274,5 +270,5 @@ struct CatView: View {
 
 
 #Preview {
-    CatView()
+    CatView(catIsON: .constant(true))
 }
