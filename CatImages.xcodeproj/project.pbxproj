@@ -25,6 +25,8 @@
 		921FB1D82CA5AFCC006DE467 /* dogVersion.json in Resources */ = {isa = PBXBuildFile; fileRef = 921FB1D72CA5AFCC006DE467 /* dogVersion.json */; };
 		921FB1D92CA5AFCC006DE467 /* catVersion.json in Resources */ = {isa = PBXBuildFile; fileRef = 921FB1D62CA5AFCC006DE467 /* catVersion.json */; };
 		921FB1DB2CA5B3A1006DE467 /* PetAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 921FB1DA2CA5B3A1006DE467 /* PetAPI.swift */; };
+		92E5EE0D2CAAB5E100701990 /* DogViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E5EE0C2CAAB5E100701990 /* DogViewModel.swift */; };
+		92E5EE0F2CAAB7BD00701990 /* DogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E5EE0E2CAAB7BD00701990 /* DogView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +48,8 @@
 		921FB1D72CA5AFCC006DE467 /* dogVersion.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = dogVersion.json; sourceTree = "<group>"; };
 		921FB1DA2CA5B3A1006DE467 /* PetAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetAPI.swift; sourceTree = "<group>"; };
 		92CE44222C8A02790064C62C /* CatImages.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CatImages.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		92E5EE0C2CAAB5E100701990 /* DogViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogViewModel.swift; sourceTree = "<group>"; };
+		92E5EE0E2CAAB7BD00701990 /* DogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,9 +77,9 @@
 			children = (
 				921F453B2C99E98C0052F0CE /* CatImagesApp.swift */,
 				921F45512C99EC6D0052F0CE /* Views */,
+				92E5EE0B2CAAB5B500701990 /* ViewModels */,
 				921F453F2C99E98C0052F0CE /* Model.swift */,
 				921FB1DA2CA5B3A1006DE467 /* PetAPI.swift */,
-				921F45402C99E98C0052F0CE /* ViewModel.swift */,
 				921F45372C99E98C0052F0CE /* Preview Content */,
 				921F45382C99E98C0052F0CE /* Assets.xcassets */,
 				921F454E2C99E9980052F0CE /* Animations */,
@@ -104,6 +108,7 @@
 				921FB1D42CA5AF9B006DE467 /* VersionMenu.swift */,
 				921F453D2C99E98C0052F0CE /* FavoritesView.swift */,
 				921F45522C99ECAB0052F0CE /* ControllersView.swift */,
+				92E5EE0E2CAAB7BD00701990 /* DogView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -122,6 +127,15 @@
 				92CE44222C8A02790064C62C /* CatImages.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		92E5EE0B2CAAB5B500701990 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				921F45402C99E98C0052F0CE /* ViewModel.swift */,
+				92E5EE0C2CAAB5E100701990 /* DogViewModel.swift */,
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -214,8 +228,10 @@
 				921F45502C99EA4B0052F0CE /* CustomSwitchView.swift in Sources */,
 				921F45532C99ECAB0052F0CE /* ControllersView.swift in Sources */,
 				921F45462C99E98C0052F0CE /* Model.swift in Sources */,
+				92E5EE0D2CAAB5E100701990 /* DogViewModel.swift in Sources */,
 				921F45472C99E98C0052F0CE /* ViewModel.swift in Sources */,
 				921FB1D52CA5AF9B006DE467 /* VersionMenu.swift in Sources */,
+				92E5EE0F2CAAB7BD00701990 /* DogView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

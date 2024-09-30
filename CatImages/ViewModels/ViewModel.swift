@@ -9,8 +9,7 @@ import Observation
 
 class PetImagesViewModel: ObservableObject {
     
-    
-
+   
     @Published var imageUrl: String?
     @Published var breedName: String?
     @Published var breedOrigin: String?
