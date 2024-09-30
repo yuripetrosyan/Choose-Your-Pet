@@ -21,11 +21,21 @@ class DogViewModel: ObservableObject {
      @Published var isLoading: Bool = false
     @Published var favoriteDogs: [DogImage] = []
     
+    // Function to like a dog
+    func likeDog (dog: DogImage) {
+        if !favoriteDogs.contains(where: { $0.url == dog.url }) {
+            favoriteDogs.append(dog)
+        }
+    }
     
+    // Function to Delete a cat from favouriste
+    func deleteCat(cat: CatImage) {
+        favoriteDogs.removeAll(where: { $0.url == cat.url })
+    }
     
     func fetchDogImage() {
         isLoading = true
-        let urlString = "https://api.thecatapi.com/v1/images/search"
+        let urlString = "https://api.thedogapi.com/v1/images/search"
         guard let url = URL(string: urlString) else { return }
 
         var request = URLRequest(url: url)
@@ -49,21 +59,18 @@ class DogViewModel: ObservableObject {
                 
                 // Ensure any UI-related changes happen on the main thread
                 DispatchQueue.main.async {
-                    // Find the first cat image that has breed information
-                    if let dogImageWithBreed = dogImages.first(where: { !$0.breeds.isEmpty }) {
+                    if let dogImageWithBreed = dogImages.first {
                         self?.imageUrl = dogImageWithBreed.url
-                        if let breed = dogImageWithBreed.breeds.first {
-                            self?.breedName = breed.name
-                            self?.breedOrigin = breed.origin
-                            self?.breedTemperament = breed.temperament
-                            self?.breedLifespan = breed.life_span
+                        if let breed = dogImageWithBreed.breeds?.first {
+                            self?.breedName = breed.name ?? "Unknown"
+                            self?.breedOrigin = breed.origin ?? "Unknown"
+                            self?.breedTemperament = breed.temperament ?? "Unknown"
+                            self?.breedLifespan = breed.life_span ?? "Unknown"
                         }
                     } else {
-                        // Retry fetching if no breed info
                         self?.fetchDogImage()
                     }
-                }
-            } catch {
+                }            } catch {
                 print("Failed to decode JSON: \(error)")
             }
         }.resume()

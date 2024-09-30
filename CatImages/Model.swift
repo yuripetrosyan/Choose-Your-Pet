@@ -16,14 +16,14 @@ struct CatImage: Codable {
 
 struct DogImage: Codable {
     let url: String
-    let breeds: [DogBreed]
+    let breeds: [DogBreed]?
 }
 
 struct DogBreed: Codable {
-    let name: String
-    let origin: String
-    let temperament: String
-    let life_span: String
+    let name: String?
+    let origin: String?
+    let temperament: String?
+    let life_span: String?
 }
 
 
