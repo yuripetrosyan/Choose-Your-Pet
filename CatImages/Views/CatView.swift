@@ -190,7 +190,7 @@ struct CatView: View {
                         }
                     }
                     if favIsON {
-                        FavoritesView(viewModel: viewModel)
+                        FavoritesView(viewModel: viewModel, catIsOn: $catIsON)
                     }
                 }
             }

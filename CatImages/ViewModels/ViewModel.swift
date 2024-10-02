@@ -26,6 +26,7 @@ class PetImagesViewModel: ObservableObject {
     func likeCat(cat: CatImage) {
         if !favoriteCats.contains(where: { $0.url == cat.url }) {
             favoriteCats.append(cat)
+            
         }
     }
     

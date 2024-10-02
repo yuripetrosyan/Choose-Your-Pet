@@ -15,14 +15,14 @@ struct VersionMenu: View {
     var body: some View {
         ZStack{
             Circle()
-                .fill(.white)
-                .frame(width: 50, height: 50)
+                .fill(.ultraThinMaterial)
+                .frame(width: 40, height: 40)
             VStack{
                 
                 LottieView(animation: .named(catIsON ? "catVersion.json" : "dogVersion.json"))
                     .playing()
             }
-            .offset(y: catIsON ? -15 : 0)
+            .offset(y: catIsON ? -25 : 0)
             .frame(width: 70, height: 70)
                 
                 

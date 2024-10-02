@@ -12,6 +12,7 @@ import Lottie
 
 struct DogView: View {
     @ObservedObject var viewModel = DogViewModel()
+    
     @State private var detailedON: Bool = false
     @State private var dragOffset: CGFloat = 0.0 // Used to track the swipe gesture
     @State private var verticalDragOffset: CGFloat = 0.0
@@ -21,7 +22,7 @@ struct DogView: View {
     @State private var showAlert = false
     
     @State var favIsON: Bool = false
-    @Binding var catIsON: Bool
+    @Binding var catIsON: Bool 
     
     var body: some View {
         GeometryReader { geo in
@@ -189,7 +190,10 @@ struct DogView: View {
                         }
                     }
                     if favIsON {
-                        FavoritesView(viewModel: PetImagesViewModel())
+                        //FavoritesView(viewModel: viewModel, catIsOn: $catIsON)
+                       // FavoritesView(viewModel: viewModel, catIsOn: $catIsON)
+                        //DogFavoritesView(viewModel: viewModel, catIsOn: $catIsON)
+                        DogFavoritesView(catIsOn: $catIsON)
                     }
                 }
             }

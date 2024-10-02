@@ -7,15 +7,11 @@
 
 import SwiftUI
 
-struct FavoritesView: View {
-    @ObservedObject var viewModel =  PetImagesViewModel()
+struct DogFavoritesView: View {
+    @ObservedObject var dogViewModel = DogViewModel()
     @Binding var catIsOn: Bool
     
-     //For preview, use mock data,
-     // Inject mock data
-//    init() {
-//        viewModel.favoriteCats = CatImagesViewModel.mockData
-//    }
+  
 
     let columns = [GridItem(.flexible()), GridItem(.flexible())] // Two columns
     //@State private var favIsOn = false
@@ -24,27 +20,21 @@ struct FavoritesView: View {
         NavigationView {
             ScrollView {
                 LazyVGrid(columns: columns, spacing: 20) {
-                        ForEach(viewModel.favoriteCats, id: \.url) { cat in
-                           
-                            CatCardView(cat: cat) // Reuse the card view to display liked cats
-                            
-                                .contentShape(.contextMenuPreview, RoundedRectangle(cornerRadius: 20))
-                                .contextMenu{
-                                    Button(role: .destructive, action: {
-                                        viewModel.deleteCat(cat: cat)
-                                    }) {
-                                        Text("Delete")
-                                    }
-                                    
+                    ForEach(dogViewModel.favoriteDogs, id: \.url) { dog in
+                        DogCardView(dog: dog)
+                            .contextMenu {
+                                Button(role: .destructive) {
+                                    dogViewModel.deleteDog(dog: dog)
+                                } label: {
+                                    Text("Delete")
                                 }
-                            
-                        }
-                    
+                            }
+                    }
                 }
                 
                 .padding()
             }
-            .navigationTitle("Favorite Cats")
+            .navigationTitle("Favorite Dogs")
 //        }.toolbar {
 //            ToolbarItem(placement: .navigation) {
 //                CustomSwitchView(favIsON: $favIsOn)
@@ -53,19 +43,21 @@ struct FavoritesView: View {
     }
 }
 
-struct CatCardView: View {
-    let cat: CatImage
+
+
+struct DogCardView: View {
+    let dog: DogImage
 
     @State private var detailedON: Bool = false
     @State private var verticalDragOffset: CGFloat = 0.0
     
     var body: some View {
         ZStack(alignment: .bottom) {
-            AsyncImage(url: URL(string: cat.url)) { image in
+            AsyncImage(url: URL(string: dog.url)) { image in
                 image
                     .resizable()
                     .scaledToFill()
-                    .frame(width: 160, height: 220) 
+                    .frame(width: 160, height: 220)
                     .clipShape(RoundedRectangle(cornerRadius: 20))
             } placeholder: {
                 ProgressView()
@@ -79,13 +71,13 @@ struct CatCardView: View {
                     .frame(height: detailedON ? 220 : 60) // Change height when detailed is on
                 
                 VStack(alignment: .leading, spacing: 5) {
-                    Text(cat.breeds.first?.name ?? "Unknown Breed")
+                    Text(dog.breeds?.first?.name ?? "Unknown Breed")
                         .font(.headline)
                     if detailedON {
                        
-                        Text("Origin: \(cat.breeds.first?.origin ?? "Unknown Origin")")
+                        Text("Temperament: \(dog.breeds?.first?.temperament ?? "Unknown Temperament")")
                             .font(.subheadline)
-                        Text("Life Span: \(cat.breeds.first?.life_span ?? "Unknown")")
+                        Text("Life Span: \(dog.breeds?.first?.life_span ?? "Unknown")")
                             .font(.subheadline)
                         
                     }
@@ -124,14 +116,9 @@ struct CatCardView: View {
 }
 
 
-
-
 #Preview {
-    FavoritesView(catIsOn: .constant(true))
+    DogFavoritesView(catIsOn: .constant(false))
    
 }
 
-#Preview{
-    CatCardView(cat: CatImage(url: "https://cdn2.thecatapi.com/images/0XYvRd7oD.jpg", breeds: []))
 
-}

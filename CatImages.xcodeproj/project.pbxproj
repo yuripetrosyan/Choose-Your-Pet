@@ -28,6 +28,7 @@
 		92E5EE0D2CAAB5E100701990 /* DogViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E5EE0C2CAAB5E100701990 /* DogViewModel.swift */; };
 		92E5EE0F2CAAB7BD00701990 /* DogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E5EE0E2CAAB7BD00701990 /* DogView.swift */; };
 		92E5EE112CAABF5100701990 /* PetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E5EE102CAABF5100701990 /* PetView.swift */; };
+		92E5EE132CAC944500701990 /* DogFavoritesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E5EE122CAC944500701990 /* DogFavoritesView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +53,7 @@
 		92E5EE0C2CAAB5E100701990 /* DogViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogViewModel.swift; sourceTree = "<group>"; };
 		92E5EE0E2CAAB7BD00701990 /* DogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogView.swift; sourceTree = "<group>"; };
 		92E5EE102CAABF5100701990 /* PetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetView.swift; sourceTree = "<group>"; };
+		92E5EE122CAC944500701990 /* DogFavoritesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogFavoritesView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +113,7 @@
 				921F454F2C99EA4B0052F0CE /* CustomSwitchView.swift */,
 				921FB1D42CA5AF9B006DE467 /* VersionMenu.swift */,
 				921F453D2C99E98C0052F0CE /* FavoritesView.swift */,
+				92E5EE122CAC944500701990 /* DogFavoritesView.swift */,
 				921F45522C99ECAB0052F0CE /* ControllersView.swift */,
 			);
 			path = Views;
@@ -231,6 +234,7 @@
 				921FB1DB2CA5B3A1006DE467 /* PetAPI.swift in Sources */,
 				921F45502C99EA4B0052F0CE /* CustomSwitchView.swift in Sources */,
 				921F45532C99ECAB0052F0CE /* ControllersView.swift in Sources */,
+				92E5EE132CAC944500701990 /* DogFavoritesView.swift in Sources */,
 				921F45462C99E98C0052F0CE /* Model.swift in Sources */,
 				92E5EE0D2CAAB5E100701990 /* DogViewModel.swift in Sources */,
 				921F45472C99E98C0052F0CE /* ViewModel.swift in Sources */,
