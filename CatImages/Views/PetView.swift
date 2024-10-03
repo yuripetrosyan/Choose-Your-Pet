@@ -10,13 +10,14 @@ import SwiftUI
 struct PetView: View {
     
     @State var catIsOn: Bool = true
-    
+    @StateObject var dogViewModel = DogViewModel()
+
 
     var body: some View {
         if catIsOn {
             CatView(catIsON: $catIsOn)
         }else {
-            DogView(catIsON: $catIsOn)
+            DogView(viewModel: DogViewModel(), catIsON: $catIsOn)
         }
 
     }

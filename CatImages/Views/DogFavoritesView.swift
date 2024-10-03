@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct DogFavoritesView: View {
-    @ObservedObject var dogViewModel = DogViewModel()
+    @ObservedObject var dogViewModel: DogViewModel
     @Binding var catIsOn: Bool
     
   
@@ -117,7 +117,7 @@ struct DogCardView: View {
 
 
 #Preview {
-    DogFavoritesView(catIsOn: .constant(false))
+    DogFavoritesView(dogViewModel: DogViewModel(), catIsOn: .constant(false))
    
 }
 

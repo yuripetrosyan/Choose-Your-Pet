@@ -11,12 +11,11 @@ import SwiftUI
 import Lottie
 
 struct DogView: View {
-    @ObservedObject var viewModel = DogViewModel()
     
+    @ObservedObject var viewModel: DogViewModel
     @State private var detailedON: Bool = false
     @State private var dragOffset: CGFloat = 0.0 // Used to track the swipe gesture
     @State private var verticalDragOffset: CGFloat = 0.0
-    
     @State private var isLiked: Bool = false
     @State private var isDisliked: Bool = false
     @State private var showAlert = false
@@ -36,7 +35,7 @@ struct DogView: View {
                                         .playing()
                                         //.frame(width: 200, height: 200)
                                         //.background(Rectangle())
-                                        .frame(width: geo.size.width * 0.95, height: geo.size.width * 1.5)
+                                        .frame(width: geo.size.width * 0.95, height: geo.size.width * 1.4)
                                         .offset(y: geo.size.height / 4)
                                 } else if let imageURL = viewModel.imageUrl {
                                     //Cat card
@@ -45,7 +44,7 @@ struct DogView: View {
                                             image
                                                 .resizable()
                                                 .scaledToFill()
-                                                .frame(width: geo.size.width * 0.95, height: geo.size.width * 1.5)
+                                                .frame(width: geo.size.width * 0.95, height: geo.size.width * 1.4)
                                                 .clipShape(RoundedRectangle(cornerRadius: 40))
                                             
                                             ZStack {
@@ -90,7 +89,7 @@ struct DogView: View {
                                         LottieView(animation: .named("dogVersion.json"))
                                             .playing()
                                            // .frame(width: 200, height: 200)
-                                            .frame(width: geo.size.width * 0.95, height: geo.size.width * 1.5)
+                                            .frame(width: geo.size.width * 0.95, height: geo.size.width * 1.4)
                                         
                                             .offset(y: geo.size.height / 4)
                                     }
@@ -190,10 +189,7 @@ struct DogView: View {
                         }
                     }
                     if favIsON {
-                        //FavoritesView(viewModel: viewModel, catIsOn: $catIsON)
-                       // FavoritesView(viewModel: viewModel, catIsOn: $catIsON)
-                        //DogFavoritesView(viewModel: viewModel, catIsOn: $catIsON)
-                        DogFavoritesView(catIsOn: $catIsON)
+                        DogFavoritesView(dogViewModel: viewModel, catIsOn: $catIsON)
                     }
                 }
             }
@@ -267,5 +263,5 @@ struct DogView: View {
 
 
 #Preview {
-    DogView(catIsON: .constant(false))
+    DogView(viewModel: DogViewModel(), catIsON: .constant(false))
 }

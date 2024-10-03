@@ -4,7 +4,6 @@
 //
 //  Created by Yuri Petrosyan on 9/5/24.
 //
-
 import SwiftUI
 import Lottie
 
@@ -13,7 +12,6 @@ struct CatView: View {
     @State private var detailedON: Bool = false
     @State private var dragOffset: CGFloat = 0.0 // Used to track the swipe gesture
     @State private var verticalDragOffset: CGFloat = 0.0
-    
     @State private var isLiked: Bool = false
     @State private var isDisliked: Bool = false
     @State private var showAlert = false
@@ -35,7 +33,7 @@ struct CatView: View {
                                         .playing()
                                         //.frame(width: 200, height: 200)
                                         //.background(Rectangle())
-                                        .frame(width: geo.size.width * 0.95, height: geo.size.width * 1.5)
+                                        .frame(width: geo.size.width * 0.95, height: geo.size.width * 1.4)
                                         .offset(y: geo.size.height / 4)
                                 } else if let imageURL = viewModel.imageUrl {
                                     //Cat card
@@ -44,7 +42,7 @@ struct CatView: View {
                                             image
                                                 .resizable()
                                                 .scaledToFill()
-                                                .frame(width: geo.size.width * 0.95, height: geo.size.width * 1.5)
+                                                .frame(width: geo.size.width * 0.95, height: geo.size.width * 1.4)
                                                 .clipShape(RoundedRectangle(cornerRadius: 40))
                                             
                                             ZStack {
@@ -89,7 +87,7 @@ struct CatView: View {
                                         LottieView(animation: .named("cat1.json"))
                                             .playing()
                                            // .frame(width: 200, height: 200)
-                                            .frame(width: geo.size.width * 0.95, height: geo.size.width * 1.5)
+                                            .frame(width: geo.size.width * 0.95, height: geo.size.width * 1.4)
                                         
                                             .offset(y: geo.size.height / 4)
                                     }

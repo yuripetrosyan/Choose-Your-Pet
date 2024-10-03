@@ -19,54 +19,53 @@ class DogViewModel: ObservableObject {
      @Published var breedTemperament: String?
     // @Published var dog_friendly: Int?
      @Published var isLoading: Bool = false
-    
-    @Published var favoriteDogs: [DogImage] = []
+     @Published var favoriteDogs: [DogImage] = []
         
-        init() {
-            loadMockData()
-        }
+//        init() {
+//            loadMockData()
+//        }
 
-        func loadMockData() {
-            let mockDog1 = DogImage(
-                url: "https://placedog.net/500", // Replace with a real image URL
-                breeds: [
-                    DogBreed(
-                        name: "Golden Retriever",
-                        origin: "United Kingdom",
-                        temperament: "Friendly, Intelligent",
-                        life_span: "10-12 years"
-                    )
-                ]
-            )
-            
-            let mockDog2 = DogImage(
-                url: "https://placedog.net/400", // Replace with a real image URL
-                breeds: [
-                    DogBreed(
-                        name: "German Shepherd",
-                        origin: "Germany",
-                        temperament: "Confident, Courageous",
-                        life_span: "9-13 years"
-                    )
-                ]
-            )
-            
-            let mockDog3 = DogImage(
-                url: "https://placedog.net/450", // Replace with a real image URL
-                breeds: [
-                    DogBreed(
-                        name: "Bulldog",
-                        origin: "United Kingdom",
-                        temperament: "Docile, Willful",
-                        life_span: "8-10 years"
-                    )
-                ]
-            )
-
-            // Add mock data to favoriteDogs array
-            favoriteDogs = [mockDog1, mockDog2, mockDog3]
-        }
-    
+//        func loadMockData() {
+//            let mockDog1 = DogImage(
+//                url: "https://placedog.net/500", // Replace with a real image URL
+//                breeds: [
+//                    DogBreed(
+//                        name: "Golden Retriever",
+//                        origin: "United Kingdom",
+//                        temperament: "Friendly, Intelligent",
+//                        life_span: "10-12 years"
+//                    )
+//                ]
+//            )
+//            
+//            let mockDog2 = DogImage(
+//                url: "https://placedog.net/400", // Replace with a real image URL
+//                breeds: [
+//                    DogBreed(
+//                        name: "German Shepherd",
+//                        origin: "Germany",
+//                        temperament: "Confident, Courageous",
+//                        life_span: "9-13 years"
+//                    )
+//                ]
+//            )
+//            
+//            let mockDog3 = DogImage(
+//                url: "https://placedog.net/450", // Replace with a real image URL
+//                breeds: [
+//                    DogBreed(
+//                        name: "Bulldog",
+//                        origin: "United Kingdom",
+//                        temperament: "Docile, Willful",
+//                        life_span: "8-10 years"
+//                    )
+//                ]
+//            )
+//
+//            // Add mock data to favoriteDogs array
+//            favoriteDogs = [mockDog1, mockDog2, mockDog3]
+//        }
+//    
 
     func likeDog(dog: DogImage) {
       //  if !favoriteDogs.contains(where: { $0.url == dog.url }) {
