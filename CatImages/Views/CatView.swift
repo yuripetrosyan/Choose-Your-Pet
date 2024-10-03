@@ -51,7 +51,7 @@ struct CatView: View {
                                                 
                                                 infoView
                                             }
-                                            .frame(width: detailedON ? geo.size.width * 0.95 : geo.size.width * 0.9, height: detailedON ? (geo.size.width * 1.5 - abs(verticalDragOffset)) : geo.size.width * 0.2 - verticalDragOffset)
+                                            .frame(width: detailedON ? geo.size.width * 0.95 : geo.size.width * 0.9, height: detailedON ? (geo.size.width * 1.4 - abs(verticalDragOffset)) : geo.size.width * 0.2 - verticalDragOffset)
                                             .padding(.bottom, detailedON ? 0 : 10)
                                             .onTapGesture {
                                                 withAnimation(.easeInOut(duration: 0.3)){
