@@ -17,6 +17,7 @@ struct CatView: View {
     @State private var showAlert = false
     
     @State var favIsON: Bool = false
+    
    //Change to state
     @Binding var catIsON: Bool 
     

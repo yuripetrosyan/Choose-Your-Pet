@@ -210,8 +210,10 @@ struct DogView: View {
                 if let breedName = viewModel.breedName {
                     Text("**Name:**  \(breedName)")
                 }
-                if let breedTemperament = viewModel.breedTemperament {
-                    Text("**Temperament:** \(breedTemperament)")
+                if let breedLifeSpan = viewModel.breedLifespan {
+                    VStack {
+                        Text("**Life Span:**  \(breedLifeSpan)")
+                    }
                 }
                 
                 if detailedON {
@@ -220,21 +222,8 @@ struct DogView: View {
                             Text("**Temperament:**  \(breedTemperament)")
                         }
                     }
-                    if let breedLifeSpan = viewModel.breedLifespan {
-                        VStack {
-                            Text("**Life Span:**  \(breedLifeSpan)")
-                        }
-                    }
-//                    if let breedDescription = viewModel.breedDescription {
-//                        HStack {
-//                            Text("**Description:**  \(breedDescription)")
-//                        }
-//                    }
-//                    if let dog_friendly = viewModel.dog_friendly {
-//                        VStack {
-//                            Text("**Dog Friendly:**  \(dog_friendly)")
-//                        }
-//                    }
+                   
+
                 }
             }.padding(.horizontal)
         }
