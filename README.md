@@ -1,4 +1,3 @@
-Here's a simple README structure for your "Choose Your Pet" SwiftUI app:
 
 ---
 
