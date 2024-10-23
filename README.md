@@ -1,4 +1,5 @@
 
+![Choose Your Pet](https://github.com/user-attachments/assets/890ceee0-363e-4066-8b80-97e606ead544)
 ---
 
 # Choose Your Pet 
